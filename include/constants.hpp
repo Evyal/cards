@@ -9,14 +9,16 @@ namespace constants {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Window constanst
-inline constexpr long windowWidth{1080};
-inline constexpr long windowHeight{720};
-inline constexpr int windowFrameRate{60};
+constexpr long windowWidth{1080};
+constexpr long windowHeight{720};
+constexpr long windowPosX{120};
+constexpr long windowPosY{40};
+constexpr int windowFrameRate{60};
 
-// Size of the field where the boids can fly
-inline constexpr float fieldSide{720.f};
-inline constexpr float marginSize{15.f};
-inline const sf::Color fieldColor{sf::Color{48, 48, 48}};
+inline const sf::Color tableColor{sf::Color{0, 153, 0}};
+
+constexpr float cardWidth{320};
+constexpr float cardHeight{cardWidth * 448 / 320};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////

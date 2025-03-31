@@ -1,10 +1,14 @@
 #include "../include/graphics.hpp"
+
+#include <SFML/Graphics/Texture.hpp>
 #include <iostream>
-#include <sstream>
+
+#include "constants.hpp"
+#include "structs.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
 
-CardGraphics::CardGraphics() {
+Gui::Gui() {
   for (int r = static_cast<int>(Rank::Two); r <= static_cast<int>(Rank::Ace);
        ++r) {
     for (int s = static_cast<int>(Suit::Hearts);
@@ -25,13 +29,13 @@ CardGraphics::CardGraphics() {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-sf::Texture& CardGraphics::getTexture(Rank rank, Suit suit) {
+sf::Texture& Gui::getTexture(Rank rank, Suit suit) {
   return textures_[{rank, suit}];
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-std::string CardGraphics::getImagePath(Rank rank, Suit suit,
+std::string Gui::getImagePath(Rank rank, Suit suit,
                                        const std::string& resolution) const {
   if (rank == Rank::Joker) {
     return "../images/face/joker@" + resolution + ".png";  // Joker path
@@ -56,7 +60,7 @@ std::string CardGraphics::getImagePath(Rank rank, Suit suit,
 }
 ////////////////////////////////////////////////////////////////////////////////
 
-sf::Texture CardGraphics::loadImage(Rank rank, Suit suit,
+sf::Texture Gui::loadImage(Rank rank, Suit suit,
                                     const std::string& resolution) const {
   std::string imagePath = getImagePath(rank, suit, resolution);
   sf::Texture texture;
@@ -68,7 +72,7 @@ sf::Texture CardGraphics::loadImage(Rank rank, Suit suit,
 
 ////////////////////////////////////////////////////////////////////////////////
 
-std::string CardGraphics::rankToString(Rank rank) const {
+std::string Gui::rankToString(Rank rank) const {
   switch (rank) {
     case Rank::Two:
       return "2";
@@ -105,7 +109,7 @@ std::string CardGraphics::rankToString(Rank rank) const {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-std::string CardGraphics::suitToString(Suit suit) const {
+std::string Gui::suitToString(Suit suit) const {
   switch (suit) {
     case Suit::Hearts:
       return "H";
@@ -121,3 +125,16 @@ std::string CardGraphics::suitToString(Suit suit) const {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+
+void Gui::displayCard(sf::RenderWindow& window, const Card& card,
+                               const TguiPar& par) {
+  sf::Sprite sprite;
+  sf::Texture texture{getTexture(card.getRank(), card.getSuit())};
+  sprite.setTexture(texture);
+  sprite.setPosition(par.posX, par.posY);
+  sprite.setScale(
+      constants::cardWidth / static_cast<float>(texture.getSize().x),
+      constants::cardHeight / static_cast<float>(texture.getSize().y));
+
+  window.draw(sprite);
+}
