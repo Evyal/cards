@@ -16,7 +16,6 @@ Gui::Gui() {
       Rank rank = static_cast<Rank>(r);
       Suit suit = static_cast<Suit>(s);
 
-      // Load images for all cards except the Joker
       if (rank != Rank::Joker) {
         textures_[{rank, suit}] = loadImage(rank, suit, "1x");
       }
@@ -36,13 +35,13 @@ sf::Texture& Gui::getTexture(Rank rank, Suit suit) {
 ////////////////////////////////////////////////////////////////////////////////
 
 std::string Gui::getImagePath(Rank rank, Suit suit,
-                                       const std::string& resolution) const {
+                              const std::string& resolution) const {
   if (rank == Rank::Joker) {
     return "../images/face/joker@" + resolution + ".png";  // Joker path
   }
 
   if (rank == Rank::Ten) {
-    return "../images/face/TC@" + resolution + ".png";  // 10 of Clubs
+    return "../images/face/TC@" + resolution + ".png";
   }
 
   if (rank == Rank::Jack || rank == Rank::Queen || rank == Rank::King ||
@@ -53,7 +52,7 @@ std::string Gui::getImagePath(Rank rank, Suit suit,
     return "../images/face/" + rankStr + suitStr + "@" + resolution + ".png";
   }
 
-  // For normal numbered cards
+  // Handle normal numbered cards
   std::string rankStr = rankToString(rank);
   std::string suitStr = suitToString(suit);
   return "../images/face/" + rankStr + suitStr + "@" + resolution + ".png";
@@ -61,7 +60,7 @@ std::string Gui::getImagePath(Rank rank, Suit suit,
 ////////////////////////////////////////////////////////////////////////////////
 
 sf::Texture Gui::loadImage(Rank rank, Suit suit,
-                                    const std::string& resolution) const {
+                           const std::string& resolution) const {
   std::string imagePath = getImagePath(rank, suit, resolution);
   sf::Texture texture;
   if (!texture.loadFromFile(imagePath)) {
@@ -91,17 +90,17 @@ std::string Gui::rankToString(Rank rank) const {
     case Rank::Nine:
       return "9";
     case Rank::Ten:
-      return "T";  // Special case for Ten
+      return "T";
     case Rank::Jack:
-      return "J";  // Special case for Jack
+      return "J";
     case Rank::Queen:
-      return "Q";  // Special case for Queen
+      return "Q";
     case Rank::King:
-      return "K";  // Special case for King
+      return "K";
     case Rank::Ace:
-      return "A";  // Special case for Ace
+      return "A";
     case Rank::Joker:
-      return "joker";  // Custom name for Joker
+      return "joker";
     default:
       return "Unknown";
   }
@@ -127,7 +126,7 @@ std::string Gui::suitToString(Suit suit) const {
 ////////////////////////////////////////////////////////////////////////////////
 
 void Gui::displayCard(sf::RenderWindow& window, const Card& card,
-                               const TguiPar& par) {
+                      const TguiPar& par) {
   sf::Sprite sprite;
   sf::Texture texture{getTexture(card.getRank(), card.getSuit())};
   sprite.setTexture(texture);
